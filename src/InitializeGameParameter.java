@@ -9,9 +9,26 @@ import java.util.List;
 
 public class InitializeGameParameter {
 
+    // initialize class variables.
+    private JPanel rulesPanel = new JPanel();
+    private JPanel diffPanel = new JPanel();
+    private JPanel timePanel = new JPanel();
+    private JPanel oppPanel = new JPanel();
+    private JPanel rowColPanel = new JPanel();
+    private JButton buttonPanel = new JButton();
+
+
+
 
     public static void main(String[] args) {
 
+        InitializeGameParameter game = new InitializeGameParameter();
+        game.gameParameter();
+
+    }
+
+
+    private void gameParameter() {
 
         // designBoard();
 
@@ -19,8 +36,7 @@ public class InitializeGameParameter {
         JFrame frame = new JFrame("Memory Matching Game");
         JPanel panelAll = new JPanel();
 
-        // Final layer buttons
-        JButton buttonPanel = new JButton();
+
 
 
         // Define as Box Layout
@@ -71,9 +87,8 @@ public class InitializeGameParameter {
     }
 
     // This is a method to add Rule Info button.
-    public static void addRuleButton(JPanel panel) {
+    public  void addRuleButton(JPanel panel) {
 
-        JPanel rulesPanel = new JPanel();
 
         // Add rule panel
         JButton b1 = new JButton("Rules About Memory Game");
@@ -98,10 +113,9 @@ public class InitializeGameParameter {
 
 
     // This is a method to add Difficulty Level Button.
-    public static void addDiffLevelButton(JPanel panel)  {
+    public  void addDiffLevelButton(JPanel panel)  {
 
         // create and initialize panel with 1 rows 4 columns format.
-        JPanel diffPanel = new JPanel();
         diffPanel.setLayout(new GridLayout(1, 4, 5, 5));
 
         // add buttons for panel.
@@ -174,9 +188,8 @@ public class InitializeGameParameter {
 
 
     // This is a method to add time information button.
-    public static void addTimeButton(JPanel panel) {
+    public  void addTimeButton(JPanel panel) {
 
-        JPanel timePanel = new JPanel();
 
         timePanel.setLayout(new GridLayout(1, 5, 5, 5));
         JRadioButton b11 = new JRadioButton("0 sec");
@@ -239,9 +252,9 @@ public class InitializeGameParameter {
 
 
     // This is a method to add player number count.
-    public static void addOpponentButton(JPanel panel) {
+    public  void addOpponentButton(JPanel panel) {
 
-        JPanel oppPanel = new JPanel();
+
 
         // Add opponent Type
         oppPanel.setLayout(new GridLayout(1, 3, 5, 5));
@@ -323,9 +336,9 @@ public class InitializeGameParameter {
 
 
     // This is method to add size(col and row) of the game.
-    public static void addRowColumnButton(JPanel panel) {
+    public  void addRowColumnButton(JPanel panel) {
 
-        JPanel rowColPanel = new JPanel();
+
 
         // Add row-col info.
         rowColPanel.setLayout(new GridLayout(1, 4, 5, 5));
@@ -394,7 +407,7 @@ public class InitializeGameParameter {
 
 
     // This is a method to add CardThem Button in the final layer.
-    public static void addCardThemeButton(JButton button) {
+    public  void addCardThemeButton(JButton button) {
 
 
 
@@ -440,7 +453,7 @@ public class InitializeGameParameter {
     }
 
     // Change Background Color of the game.
-    public static void addThemeChangeButton(JButton button) {
+    public  void addThemeChangeButton(JButton button) {
 
         JButton bf1 = new JButton("Change Theme");
 
@@ -478,7 +491,7 @@ public class InitializeGameParameter {
 
 
     // add high score board in the initial window.
-    public static void addLeaderBoardButton(JButton button) {
+    public  void addLeaderBoardButton(JButton button) {
 
         // Add High Scores Button.
         JButton bf2 = new JButton("High Scores");
@@ -494,7 +507,7 @@ public class InitializeGameParameter {
     }
 
     // add start button.
-    public static void addStartButton(JButton button) {
+    public  void addStartButton(JButton button) {
 
         JButton bf3 = new JButton("Start");
         bf3.addActionListener(new ActionListener() {
@@ -546,7 +559,7 @@ public class InitializeGameParameter {
 
 
     // this button exits the window.
-    public static void addExitButton(JButton button) {
+    public  void addExitButton(JButton button) {
 
         JButton bf4 = new JButton("Exit");
         bf4.addActionListener(new ActionListener() {
@@ -564,7 +577,7 @@ public class InitializeGameParameter {
 
 
     // display the highest score by reading a file.
-    public static void scoreDisplay() {
+    public  void scoreDisplay() {
 
         String[] titles = {"Names", "Date", "Total Points"};
         String[] names = new String[3];
