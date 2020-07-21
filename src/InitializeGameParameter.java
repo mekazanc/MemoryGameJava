@@ -19,7 +19,6 @@ public class InitializeGameParameter {
 
 
 
-
     public static void main(String[] args) {
 
         InitializeGameParameter game = new InitializeGameParameter();
