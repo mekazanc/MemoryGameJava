@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.io.*;
 import java.util.*;
 
-public class GetGameParameters {
+public class InitialScreen {
 
     // initialize class variables.
     private JPanel rulesPanel = new JPanel();
@@ -17,14 +17,14 @@ public class GetGameParameters {
     private JButton buttonPanel = new JButton();
 
 
-    private SetGameParameters gameParams = new SetGameParameters();
+    private Settings gameParams = new Settings();
 
 
 
 
     public static void main(String[] args) {
 
-        GetGameParameters game = new GetGameParameters();
+        InitialScreen game = new InitialScreen();
         game.gameParameter();
 
     }

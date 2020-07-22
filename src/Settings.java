@@ -2,7 +2,7 @@ import javax.swing.JButton;
 import java.util.List;
 
 
-public class SetGameParameters {
+public class Settings {
 
 // Define getters and setters to update table information.
 
