@@ -5,9 +5,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
-public class InitializeGameParameter {
+public class GetGameParameters {
 
     // initialize class variables.
     private JPanel rulesPanel = new JPanel();
@@ -18,10 +17,14 @@ public class InitializeGameParameter {
     private JButton buttonPanel = new JButton();
 
 
+    private SetGameParameters gameParams = new SetGameParameters();
+
+
+
 
     public static void main(String[] args) {
 
-        InitializeGameParameter game = new InitializeGameParameter();
+        GetGameParameters game = new GetGameParameters();
         game.gameParameter();
 
     }
@@ -63,7 +66,7 @@ public class InitializeGameParameter {
         // initialize final layer buttons
         buttonPanel.setLayout(new GridLayout(1, 5, 5, 5));
 
-        // add successively.
+        // add final layer buttons successively.
         addCardThemeButton(buttonPanel);
         addThemeChangeButton(buttonPanel);
         addLeaderBoardButton(buttonPanel);
@@ -73,7 +76,6 @@ public class InitializeGameParameter {
 
         // add final layer into whole panel.
         panelAll.add(buttonPanel);
-
 
 
         // Finally, merge all information into one.
@@ -157,19 +159,19 @@ public class InitializeGameParameter {
                 if (aButton.getText().equals("Easy")) {
                     //System.out.println(2000);
                     //System.out.println("The game will be EASY..!");
-                    //table.setDiffLevel(2000);
+                    gameParams.setDiffLevel(2000);
                     //System.out.println("now get it " + table.getDiffLevel());
                     //gameDiff = "Easy";
                 } else if (aButton.getText().equals("Medium")) {
                     //System.out.println(1000);
                     //System.out.println("The game will be MEDIUM..!");
-                    //table.setDiffLevel(1000);
+                    gameParams.setDiffLevel(1000);
                     //gameDiff = "Medium";
                     //System.out.println("now get it " + table.getDiffLevel());
                 } else if (aButton.getText().equals("Difficult")) {
                     //System.out.println(500);
                     //System.out.println("The game will be DIFFICULT..!");
-                    //table.setDiffLevel(500);
+                    gameParams.setDiffLevel(500);
                     //System.out.println("now get it " + table.getDiffLevel());
                     //gameDiff = "Difficult";
                 }
