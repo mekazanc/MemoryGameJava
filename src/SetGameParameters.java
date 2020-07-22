@@ -5,7 +5,6 @@ import java.util.List;
 public class SetGameParameters {
 
 // Define getters and setters to update table information.
-// For example: rowid, colid, timeinfo,difflevel and so on.
 
 private int diffLevel;
 
