@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class InitialScreen {
 
@@ -18,6 +19,8 @@ public class InitialScreen {
 
 
     private Settings gameParams = new Settings();
+
+    private List<String> multiPlayerName = new ArrayList<String>();
 
 
 
@@ -86,6 +89,8 @@ public class InitialScreen {
 
 
     }
+
+
 
     // This is a method to add Rule Info button.
     public  void addRuleButton(JPanel panel) {
@@ -218,7 +223,7 @@ public class InitialScreen {
                 //System.out.println("new time " + timeText);
                 int intTimeText = Integer.valueOf(timeText);
                 //System.out.println(intTimeText);
-                // ** table.setTimeInfo(intTimeText);
+                gameParams.setTimeInfo(intTimeText);
                 // timeStatus = true;
             }
         };
@@ -283,7 +288,9 @@ public class InitialScreen {
 
                     } else {
                         System.out.println("Entered name is " + Player1);
-                        //table.setSingleName(Player1);
+
+                        //set game Params.
+                        gameParams.setSingleName(Player1);
                     }
 
                     //oppStatus = true;
@@ -305,11 +312,10 @@ public class InitialScreen {
                         System.out.println("Entered name is " + Player2);
                     }
 
-                    //multiPlayerName.add(Player1);
-                    //multiPlayerName.add(Player2);
-
+                    multiPlayerName.add(Player1);
+                    multiPlayerName.add(Player2);
                     //System.out.println(multiPlayerName);
-                    //table.setTwoPlayersName(multiPlayerName);
+                    gameParams.setTwoPlayersName(multiPlayerName);
 
                     //oppStatus = true;
 
@@ -368,6 +374,7 @@ public class InitialScreen {
                 int s2 = Integer.parseInt(s);
                 System.out.println("Row button is selected as : " + s);
                 //table.setrowId(s2);
+                gameParams.setrowId(s2);
                 //rowStatus = true;
 
             }
@@ -386,6 +393,7 @@ public class InitialScreen {
                 String s33 = (String) cols_.getSelectedItem();
                 s4 = Integer.parseInt(s33);
                 //table.setcolId(s4);
+                gameParams.setcolId(s4);
 
             }
 
