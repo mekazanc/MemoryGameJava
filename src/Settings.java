@@ -4,15 +4,13 @@ import java.util.List;
 
 public class Settings {
 
-// Define getters and setters to update table information.
+// Define getters and setters to update game parameters.
 private int colid;
 private int rowid;
 private int diffLevel;
 private int timeInfo;
 private String playerName;
 private List<String> multiplePlayerName;
-
-
 
 
 
