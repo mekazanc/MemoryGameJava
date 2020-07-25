@@ -3,20 +3,25 @@
 public class MainGame {
 
 
+
     public static void main(String[] args) {
 
         // create new initial screen and call initLaunchScreen method.
-        InitialScreen game = new InitialScreen();
-        game.initLaunchScreen();
+        InitialScreen view = new InitialScreen();
+        view.initLaunchScreen();
+
+            //Settings theModel = new Settings();
+
+            //InitialScreen theView = new InitialScreen();
+
+            //theModel = theView.gameParams;
+
+            //System.out.println(theModel.getSingleName());
 
 
-        int colNo = game.gameParams.getcolId();
-        int rowNo = game.gameParams.getrowId();
-
-        System.out.println(colNo);
-        System.out.println(rowNo);
-
-
+            //Controller theController = new Controller(theView,theModel);
+            //System.out.println(theController);
+            //System.out.println(theController.toString());*/
 
 
     }

@@ -4,78 +4,92 @@ import java.util.List;
 
 public class Settings {
 
-// Define getters and setters to update game parameters.
-private int colid;
-private int rowid;
-private int diffLevel;
-private int timeInfo;
-private String playerName;
-private List<String> multiplePlayerName;
+    // Define getters and setters to update game parameters.
+    private int colId;
+    private int rowId;
+    private int diffLevel;
+    private int timeInfo;
+    private String playerName;
+    private boolean singlePlayer;
+    private List<String> multiplePlayerName;
 
 
+    public int getDiffLevel() {
 
-public int getDiffLevel() {
+        return this.diffLevel;
 
-return this.diffLevel;
+    }
 
-}
+    public void setDiffLevel(int level) {
 
-public void setDiffLevel(int level) {
+        this.diffLevel = level;
+        System.out.println("Setting is ok " + level);
 
-this.diffLevel = level;
-System.out.println("Setting is ok " + level);
+    }
 
-}
+    public void setrowId(int id) {
+        this.rowId = id;
+    }
 
-public void setrowId(int id) {
-this.rowid = id;
+    public int getrowId() {
+        return this.rowId;
+    }
+
+
+    public void setcolId(int id) {
+        this.colId = id;
 //return this.id;
-}
+    }
 
-public int getrowId() {
-return this.rowid;
-}
+    public int getcolId() {
+        return this.colId;
+    }
 
+    public int getTimeInfo() {
 
-public void setcolId(int id) {
-this.colid = id;
-//return this.id;
-}
+        return this.timeInfo;
 
-public int getcolId() {
-return this.colid;
-}
+    }
 
-public int getTimeInfo() {
+    public void setTimeInfo(int time) {
 
-return this.timeInfo;
-
-}
-
-public void setTimeInfo(int time) {
-
-this.timeInfo = time;
-}
+        this.timeInfo = time;
+    }
 
 
-public String setSingleName(String name) {
+    public String setSingleName(String name) {
 
-return this.playerName = name;
-}
+        return this.playerName = name;
+    }
 
-public String getSingleName() {
-return this.playerName;
-}
+    public boolean setSinglePlayer(boolean name) {
+
+        if (name) {
+            return this.singlePlayer = true;
+        } else {
+            return this.singlePlayer = false;
+        }
+    }
+
+    public boolean getSinglePlayer() {
+
+        return this.singlePlayer;
+
+    }
 
 
-public List<String> getTwoPlayersName() {
-    return multiplePlayerName;
-}
+    public String getSingleName() {
+        return this.playerName;
+    }
 
-public void setTwoPlayersName(List<String> tmpList) {
-    this.multiplePlayerName = tmpList;
-}
 
+    public List<String> getTwoPlayersName() {
+        return multiplePlayerName;
+    }
+
+    public void setTwoPlayersName(List<String> tmpList) {
+        this.multiplePlayerName = tmpList;
+    }
 
 
 }

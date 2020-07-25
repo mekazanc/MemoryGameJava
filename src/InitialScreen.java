@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -20,7 +19,9 @@ public class InitialScreen {
     private JComboBox<String> rowsNew = new JComboBox<String>();
     private JComboBox<String> colsNew = new JComboBox<String>();
     private List<String> multiPlayerName = new ArrayList<String>();
+    private JFrame frame = new JFrame("Memory Matching Game");
     public Settings gameParams = new Settings();
+
 
 
     public static void main(String[] args) {
@@ -35,7 +36,6 @@ public class InitialScreen {
     public void initLaunchScreen() {
 
         // Add the frame, panel for the initial window.
-        JFrame frame = new JFrame("Memory Matching Game");
         JPanel panelAll = new JPanel();
 
 
@@ -398,7 +398,23 @@ public class InitialScreen {
 
     // add actionListener for Start Button.
     private void actionPerformedStartButton(ActionEvent e) {
-        //Write code here to start the program.
+        // Write code here to start the program.
+        // After parameters are collected, let's initialize game.
+
+        frame.setVisible(false);
+        frame.dispose();
+
+
+        BoardScreen startGame =  new BoardScreen(gameParams);
+        // Someone can exit board.
+        startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Set background color.
+        startGame.setBackground(Color.gray);
+        // Other Board remaining initializations.
+        startGame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
+        startGame.pack();
+        startGame.setVisible(true);
+
 
     }
 
@@ -578,7 +594,6 @@ public class InitialScreen {
 
 
 }
-
 
 
 
