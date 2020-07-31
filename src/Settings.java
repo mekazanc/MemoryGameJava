@@ -83,11 +83,11 @@ public class Settings {
     }
 
 
-    public List<String> getTwoPlayersName() {
+    public List<String> getPlayersName() {
         return multiplePlayerName;
     }
 
-    public void setTwoPlayersName(List<String> tmpList) {
+    public void setPlayersName(List<String> tmpList) {
         this.multiplePlayerName = tmpList;
     }
 

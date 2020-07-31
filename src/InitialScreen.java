@@ -18,7 +18,7 @@ public class InitialScreen {
     private JButton buttonPanel = new JButton();
     private JComboBox<String> rowsNew = new JComboBox<String>();
     private JComboBox<String> colsNew = new JComboBox<String>();
-    private List<String> multiPlayerName = new ArrayList<String>();
+    private List<String> playersName = new ArrayList<String>();
     private JFrame frame = new JFrame("Memory Matching Game");
     public Settings gameParams = new Settings();
 
@@ -526,7 +526,8 @@ public class InitialScreen {
                 System.out.println("Entered name : " + Player1);
 
                 //set game Params.
-                gameParams.setSingleName(Player1);
+                playersName.add(Player1);
+                gameParams.setPlayersName(playersName);
             }
 
 
@@ -548,9 +549,9 @@ public class InitialScreen {
                 System.out.println("Entered name : " + Player2);
             }
 
-            multiPlayerName.add(Player1);
-            multiPlayerName.add(Player2);
-            gameParams.setTwoPlayersName(multiPlayerName);
+            playersName.add(Player1);
+            playersName.add(Player2);
+            gameParams.setPlayersName(playersName);
         }
     }
 

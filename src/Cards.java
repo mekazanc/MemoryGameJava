@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 // Define getters and setters to update card information and info button.
@@ -45,6 +46,23 @@ public class Cards extends JButton {
         setIcon(new ImageIcon(FILE_NAME));
 
     }
+
+    public void changeButtonParams(int[] scores, int time, List<String> names) {
+
+        // if  it is single player
+        if (names.size() == 1) {
+
+            changeParameters(scores[0], time, names.get(0));
+
+        // if it is multiple player.
+        } else {
+
+            changeParametersMultiPlayer(scores[0], scores[1],  names.get(0), names.get(1));
+
+        }
+
+    }
+
 
     public void changeParameters(int score, int time, String name) {
         setText("Points achieved by " + name + " : " + score + " |  Time left : " + time);

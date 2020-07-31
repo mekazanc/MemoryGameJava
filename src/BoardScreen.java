@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class BoardScreen extends JFrame {
 
-
     private int col;
     private int row;
     private int diffLevel;
@@ -19,15 +18,14 @@ public class BoardScreen extends JFrame {
     private boolean playerSingle;
     private List<String> playersName;
     private Cards choseMyCard;
-    private Cards card1;
-    private Cards card2;
+    private Cards card1 = null ;
+    private Cards card2 = null;
     private Cards infoCard;
-    private int gameScore = 0 ;
+    private int[] gameScores;
     private int timeScore = 0 ;
     private Timer timeControl;
     private List<Cards> Cards;
     private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
-
 
 
 
@@ -38,13 +36,16 @@ public class BoardScreen extends JFrame {
         this.diffLevel = gameParams.getDiffLevel();
         this.timeInfo = gameParams.getTimeInfo();
         this.playerSingle = gameParams.getSinglePlayer();
-        this.playerName = gameParams.getSingleName();
-        this.playersName = gameParams.getTwoPlayersName();
+        this.playersName = gameParams.getPlayersName();
 
+        this.gameScores = new int[gameParams.getPlayersName().size()];
+
+
+        System.out.println("bb " + gameParams.getPlayersName().size());
 
         // initialize card Number and List of Card Objects.
 
-        this.Cards = initCards(row, col);
+        this.Cards = initCards(row, col, gameParams);
 
         // Create a BigRootPane with borderlayout.
         // We will put cards and info button inside.
@@ -66,8 +67,8 @@ public class BoardScreen extends JFrame {
         big.add(infoButton, BorderLayout.SOUTH);
 
 
-        //infoCard.changeParameters(gameScore, timeScore,playerName);
-
+        this.infoCard = infoButton;
+        infoCard.changeButtonParams( gameScores,  timeScore, playersName);
 
 
 
@@ -80,7 +81,7 @@ public class BoardScreen extends JFrame {
     }
 
 
-    public List<Cards> initCards(int row, int col) {
+    public List<Cards> initCards(int row, int col, Settings gameParams) {
 
         // create list of Card objects.
         List<Cards> listOfCards = new ArrayList<Cards>();
@@ -104,18 +105,21 @@ public class BoardScreen extends JFrame {
         // Mix card values randomly.
         Collections.shuffle(valuesOfCards);
 
+        // retrieve type of the game. (Singe/Double)
+        int playerSize = gameParams.getPlayersName().size();
 
-        for (int tmpNo = 0; tmpNo < valuesOfCards.size(); tmpNo++) {
+
+        for (Integer valuesOfCard : valuesOfCards) {
             // Create Card object for each image.
             Cards mySelect = new Cards();
-            mySelect.setCardNo(valuesOfCards.get(tmpNo));
+            mySelect.setCardNo(valuesOfCard);
             // Add action listener to change image of the card.
             mySelect.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     // assign mySelect as chosen card and then call flipCards method.
                     choseMyCard = mySelect;
                     // Flip cards will be called after any of cards is pressed.
-                    if (playerSingle) {
+                    if (playerSize == 1) {
                         flipCardsSingle();
                     } else {
                         flipCardsMulti();
@@ -126,9 +130,18 @@ public class BoardScreen extends JFrame {
             // Add all buttons into one list to process them in a board.
             listOfCards.add(mySelect);
         }
+        System.out.println(listOfCards.toString());
 
         return listOfCards;
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -192,13 +205,12 @@ public class BoardScreen extends JFrame {
 
 
     // This method fills card1 and card2 objects according to actions in the board.
-    // Each button has action listeners so that chosemycard object is filled.
+    // Each button has action listeners so that choseMyCard object is filled.
     public void flipCardsSingle() {
-
 
         // This condition helps us to understand first card is selected.
         if (card1 == null && card2 == null) {
-
+            System.out.println("Card 1 is selected");
             // After card is chosen, image need to be showed.
             card1 = choseMyCard;
             // In this step, image was taken according to card no.
@@ -209,7 +221,6 @@ public class BoardScreen extends JFrame {
         }
 
         // This case helps us to select second card.
-
         else if (card1 != null && card1 != choseMyCard && card2 == null) {
 
             // Assign selected card as my new card.
@@ -234,7 +245,7 @@ public class BoardScreen extends JFrame {
                 card2.setEnabled(false);
                 card1.setCardMatchedInfo(true); //flags the button as having been matched
                 card2.setCardMatchedInfo(true);
-                gameScore++;
+                //gameScore++;
 
 
                 if (this.checkWinning()){
