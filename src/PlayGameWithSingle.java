@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayGameWithSingle extends JFrame {
+
+    // initalize class variables.
+
     private int col;
     private int row;
     private int diffLevel;
@@ -18,11 +21,13 @@ public class PlayGameWithSingle extends JFrame {
     private int[] gameScores;
     private int attackCardID;
     private int timeScore;
+    private Color backColor;
     private int timeScoreSelected;
     private boolean timeScoreStatus;
     private Timer cardTimeControl;
     private Timer gameTimeControl;
     private List<Cards> Cards;
+    private String cardTheme;
     private boolean alreadyExecuted = false;
     private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
 
@@ -39,6 +44,8 @@ public class PlayGameWithSingle extends JFrame {
         this.timeScoreStatus = gameParams.getTimeInfo() != 0;
         this.diffLevel = gameParams.getDiffLevel(); // 500:Diff - 1000:Medium - 2000:Easy
         this.timeScoreSelected = gameParams.getTimeInfo();
+        this.cardTheme = gameParams.getCardTheme();
+        this.backColor = gameParams.getBackColor();
 
 
         // initialize card Number and List of Card Objects.
@@ -53,7 +60,7 @@ public class PlayGameWithSingle extends JFrame {
         //Set up the board itself
         Container pane = getContentPane();
         pane.setLayout(new GridLayout(row, col));
-        //pane.setBackground(Color.white);
+        pane.setBackground(backColor);
 
         // Create another card object for info button.
         // This will show score and time information.
@@ -89,8 +96,8 @@ public class PlayGameWithSingle extends JFrame {
 
         // Calculate total number of buttons for the game.
         int pairs = (row * col) / 2;
-        String pairS = String.valueOf(pairs);
-        System.out.println("Pair is : " + pairS);
+        //String pairS = String.valueOf(pairs);
+        //System.out.println("Pair is : " + pairS);
 
         // Create two card lists as many as pairs.
         for (int j = 0; j < pairs; j++) {
@@ -98,20 +105,16 @@ public class PlayGameWithSingle extends JFrame {
             valuesOfCards.add(j);
         }
 
-        System.out.println(valuesOfCards);
-
         // Mix card values randomly.
         Collections.shuffle(valuesOfCards);
 
-        // this is the ID of the attack card in difficult game.
+
+        // This is the ID of the attack card in difficult game.
         attackCardID = valuesOfCards.get(0);
         System.out.println("Attacked Card : " + attackCardID);
 
 
-        // retrieve type of the game. (Singe/Double)
-        int playerSize = gameParams.getPlayersName().size();
-
-
+        // add actions to each card. Then, return card objects.
         for (Integer valuesOfCard : valuesOfCards) {
             // Create Card object for each image.
             Cards mySelect = new Cards();
@@ -128,7 +131,7 @@ public class PlayGameWithSingle extends JFrame {
             // Add all buttons into one list to process them in a board.
             listOfCards.add(mySelect);
         }
-        System.out.println(listOfCards.toString());
+        //System.out.println(listOfCards.toString());
 
         return listOfCards;
     }
@@ -170,7 +173,7 @@ public class PlayGameWithSingle extends JFrame {
             // In this step, image was taken according to card no.
             String no = String.valueOf(card1.getCardNo());
             // Then, card-button displays image.
-            card1.setImageVisible(no, "socialmedia");
+            card1.setImageVisible(no, cardTheme);
 
         }
 
@@ -182,7 +185,7 @@ public class PlayGameWithSingle extends JFrame {
             // Then, get card no of it.
             String no = String.valueOf(card2.getCardNo());
             // Finally, card object shows its image.
-            card2.setImageVisible(no, "socialmedia");
+            card2.setImageVisible(no, cardTheme);
 
             // start time to come back.
             cardTimeCounter();

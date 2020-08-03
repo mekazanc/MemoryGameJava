@@ -452,6 +452,9 @@ public class InitialScreen {
 
             try {
                 Color backgroundColor = (Color) Color.class.getField(options[option].toLowerCase()).get(null);
+
+                gameParams.setBackColor(backgroundColor);
+
             } catch (IllegalAccessException | NoSuchFieldException ex) {
                 ex.printStackTrace();
             }
@@ -479,13 +482,17 @@ public class InitialScreen {
             switch (options[option]) {
                 case "Gastronomy":
                     System.out.println("Selected Theme : Gastronomy");
+                    gameParams.setCardTheme("gastronomy");
+
                     break;
                 case "Social Media":
                     System.out.println("Selected Theme : Social Media");
+                    gameParams.setCardTheme("socialmedia");
 
                     break;
                 case "Countries":
                     System.out.println("Selected Theme : Countries");
+                    gameParams.setCardTheme("countries");
                     break;
             }
 

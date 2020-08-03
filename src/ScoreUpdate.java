@@ -9,15 +9,15 @@ import java.util.Scanner;
 public class ScoreUpdate {
 
     //String fileAddress = "src/highscore.txt";
-    String fileAddress = new File("src/highscore.txt").getAbsolutePath();
-    private int remTime ;
-    private int row ;
-    private int col ;
+    private String fileAddress = new File("src/highscore.txt").getAbsolutePath();
+    private int remTime;
+    private int row;
+    private int col;
     private int selectedTime;
     private String playerName;
 
 
-    public ScoreUpdate(int remTime, int row, int col, int selectedTime, String playerName){
+    public ScoreUpdate(int remTime, int row, int col, int selectedTime, String playerName) {
 
         this.remTime = remTime;
         this.row = row;
@@ -29,12 +29,12 @@ public class ScoreUpdate {
     }
 
 
-    public void checkAndUpdate(){
+    public void checkAndUpdate() {
 
         double finalScore = scoreCalculation(remTime, row, col, selectedTime);
 
         // check and update score
-        boolean result = scoreControl( finalScore , playerName);
+        boolean result = scoreControl(finalScore, playerName);
         if (result) {
             System.out.println("Score UPDATED..!! CONGRATULATIONS...");
         }
@@ -43,12 +43,11 @@ public class ScoreUpdate {
     }
 
 
-
     // this method calculates score of the game.
-    public double scoreCalculation(int remTime, int row, int col, int selectedTime ) {
+    private double scoreCalculation(int remTime, int row, int col, int selectedTime) {
 
         int size = col * row;
-        double finalScore ;
+        double finalScore;
 
         System.out.println("Remained time is " + remTime);
         System.out.println("Size is " + size);
@@ -58,9 +57,9 @@ public class ScoreUpdate {
         int usedTime = selectedTime - remTime;
         System.out.println(usedTime);
 
-        if (usedTime == 0 ) {
+        if (usedTime == 0) {
 
-            finalScore = 0 ;
+            finalScore = 0;
         } else {
 
             finalScore = size * ((double) size / usedTime);
@@ -69,13 +68,12 @@ public class ScoreUpdate {
         }
 
 
-
         return finalScore;
     }
 
 
     // this method confirms new score is to be inserted leaderboard table.
-    public boolean scoreControl(double score , String playerName) {
+    private boolean scoreControl(double score, String playerName) {
 
         System.out.println("Final score is " + score);
 
@@ -188,32 +186,32 @@ public class ScoreUpdate {
     }
 
 
-    public void updateScoreFile(boolean changeFile, String[] namesNew,
-                            String[] datesNew, String[] pointsNew) {
+    private void updateScoreFile(boolean changeFile, String[] namesNew,
+                                 String[] datesNew, String[] pointsNew) {
 
-    if (changeFile) {
-        // write new data structures to txt file.
-        try {
+        if (changeFile) {
+            // write new data structures to txt file.
+            try {
 
-            FileWriter f2 = new FileWriter(fileAddress, false);
-            for (int i = 0; i < namesNew.length; i++) {
-                String line1 = namesNew[i] + "," + datesNew[i] + "," + pointsNew[i] + "\n";
-                f2.write(line1);
+                FileWriter f2 = new FileWriter(fileAddress, false);
+                for (int i = 0; i < namesNew.length; i++) {
+                    String line1 = namesNew[i] + "," + datesNew[i] + "," + pointsNew[i] + "\n";
+                    f2.write(line1);
 
+                }
+
+                f2.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            f2.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
 
     }
 
 
 }
-
-
-    }
 
 
 

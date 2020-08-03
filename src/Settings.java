@@ -1,4 +1,5 @@
 import javax.swing.JButton;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,8 @@ public class Settings {
     private int diffLevel = 1000;
     private int timeInfo = 60;
     private String playerName ;
+    private String cardTheme = "socialmedia";
+    private Color backgroundColor ;
     private boolean singlePlayer;
     private List<String> multiplePlayerName = Arrays.asList("Player1");
 
@@ -27,6 +30,33 @@ public class Settings {
         System.out.println("Setting is ok " + level);
 
     }
+
+    public String getCardTheme() {
+
+        return this.cardTheme;
+
+    }
+
+    public void setCardTheme(String theme) {
+
+        this.cardTheme = theme;
+        System.out.println("Setting is ok " + theme);
+
+    }
+
+    public Color getBackColor() {
+
+        return this.backgroundColor;
+
+    }
+
+    public void setBackColor(Color color) {
+
+        this.backgroundColor = color;
+        System.out.println("Setting is ok " + color);
+
+    }
+
 
     public void setrowId(int id) {
         this.rowId = id;
