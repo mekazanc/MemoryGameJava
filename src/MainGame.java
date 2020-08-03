@@ -3,27 +3,26 @@
 public class MainGame {
 
 
-
     public static void main(String[] args) {
 
         // create new initial screen and call initLaunchScreen method.
         InitialScreen theView = new InitialScreen();
         //view.initLaunchScreen();
 
-            Settings theModel = new Settings();
+        Settings theModel = new Settings();
 
-            //InitialScreen theView = new InitialScreen();
+        //InitialScreen theView = new InitialScreen();
 
-            theModel = theView.gameParams;
+        theModel = theView.gameParams;
 
-            //System.out.println(theModel.getSingleName());
+        //System.out.println(theModel.getSingleName());
 
 
-            Controller theController = new Controller(theView,theModel);
-            //System.out.println(theController);
-            //System.out.println(theController.toString());*/
+        Controller theController = new Controller(theView, theModel);
+        //System.out.println(theController);
+        //System.out.println(theController.toString());*/
 
-            theController.controllerStartGame();
+        theController.controllerStartGame();
 
 
     }
