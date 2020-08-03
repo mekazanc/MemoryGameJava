@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BoardScreenSingle extends JFrame {
+public class PlayGameWithSingle extends JFrame {
     private int col;
     private int row;
     private int diffLevel;
     private List<String> playersName;
     private Cards choseMyCard;
-    private Cards card1 = null ;
+    private Cards card1 = null;
     private Cards card2 = null;
     private Cards infoCard;
     private int[] gameScores;
     private int attackCardID;
-    private int timeScore ;
+    private int timeScore;
     private boolean timeScoreStatus;
     private Timer cardTimeControl;
     private Timer gameTimeControl;
@@ -26,7 +26,7 @@ public class BoardScreenSingle extends JFrame {
     private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
 
 
-    public BoardScreenSingle(Settings gameParams) {
+    public PlayGameWithSingle(Settings gameParams) {
 
         // retrieve game information to initialize board and game settings.
         this.col = gameParams.getcolId();
@@ -65,7 +65,7 @@ public class BoardScreenSingle extends JFrame {
 
         // display game details (name, time) in the info button.
         this.infoCard = infoButton;
-        infoCard.changeButtonParams( gameScores,  timeScore, playersName);
+        infoCard.changeButtonParams(gameScores, timeScore, playersName);
 
 
         // add Card objects into the board. Set their back-side symbol.
@@ -103,6 +103,8 @@ public class BoardScreenSingle extends JFrame {
 
         // this is the ID of the attack card in difficult game.
         attackCardID = valuesOfCards.get(0);
+        System.out.println("Attacked Card : " + attackCardID);
+
 
         // retrieve type of the game. (Singe/Double)
         int playerSize = gameParams.getPlayersName().size();
@@ -134,8 +136,8 @@ public class BoardScreenSingle extends JFrame {
     private void cardTimeCounter() {
 
         //set up the timer
-        cardTimeControl = new Timer(750, new ActionListener(){
-            public void actionPerformed(ActionEvent ae){
+        cardTimeControl = new Timer(750, new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
                 controlCards();
             }
         });
@@ -154,11 +156,10 @@ public class BoardScreenSingle extends JFrame {
         if (card1 == null && card2 == null) {
 
             // start timer of the game once.
-            if(!alreadyExecuted) {
+            if (!alreadyExecuted) {
                 trackTime();
                 alreadyExecuted = true;
             }
-
 
 
             System.out.println("Card 1 is selected");
@@ -191,38 +192,34 @@ public class BoardScreenSingle extends JFrame {
     // This method checks both selected cards. They can stay opened or they come back (closed).
     private void controlCards() {
 
-            boolean cardMatching ;
+        if (card1.getCardNo() == card2.getCardNo()) {//match condition
+            card1.setEnabled(false); //disables the button
+            card2.setEnabled(false);
+            card1.setCardMatchedInfo(true); //flags the button as having been matched
+            card2.setCardMatchedInfo(true);
+            //gameScore++;
+            gameScores[0] = gameScores[0] + 1;
 
-            if (card1.getCardNo() == card2.getCardNo()){//match condition
-                card1.setEnabled(false); //disables the button
-                card2.setEnabled(false);
-                card1.setCardMatchedInfo(true); //flags the button as having been matched
-                card2.setCardMatchedInfo(true);
-                //gameScore++;
-                gameScores[0] = gameScores[0] + 1;
+            // start game effect : positive effect
+            startGameEffect(true);
 
-                // start game effect : positive effect
-                startGameEffect(true);
-
-                if (this.checkWinning()){
-                    JOptionPane.showMessageDialog(this, "You win!");
-                    System.exit(0);
-                }
+            if (this.checkWinning()) {
+                JOptionPane.showMessageDialog(this, "You win!");
+                System.exit(0);
             }
+        } else {
 
-            else{
+            // start game effect : negative effect
+            startGameEffect(false);
 
-                // start game effect : negative effect
-                startGameEffect(false);
+            // Then we need to change picture of our unselected cards.
+            card1.setIcon(new ImageIcon(DEFAULT_IMAGE));
+            card2.setIcon(new ImageIcon(DEFAULT_IMAGE));
 
-                // Then we need to change picture of our unselected cards.
-                card1.setIcon(new ImageIcon(DEFAULT_IMAGE));
-                card2.setIcon(new ImageIcon(DEFAULT_IMAGE));
-
-            }
-            card1 = null; //reset c1 and c2
-            card2 = null;
         }
+        card1 = null; //reset c1 and c2
+        card2 = null;
+    }
 
     // This method affects game according to difficulty level.
     // Easy : Time Counter increases 1 second.
@@ -240,8 +237,20 @@ public class BoardScreenSingle extends JFrame {
 
         } else {
             // decrease time information by one.
+            // and there is a card pair. If one them comes, all opened cards become closed.
             if (diffLevel == 2000) {
+                System.out.println("In the difficult level ");
                 timeScore--;
+                if (card1.getCardNo() == attackCardID | card2.getCardNo() == attackCardID) {
+                    //System.out.println(  "Attacked Card : " + attackCardID);
+                    for (Cards comp : Cards) {
+                        comp.setIcon(new ImageIcon(DEFAULT_IMAGE));
+                        comp.setEnabled(true);
+                        comp.setCardMatchedInfo(false);
+                    }
+
+
+                }
 
             }
 
@@ -249,11 +258,10 @@ public class BoardScreenSingle extends JFrame {
     }
 
 
-
     // This method checks winning state.
-    private boolean checkWinning(){
-        for(Cards c: this.Cards){
-            if (!c.getCardMatchedInfo()){
+    private boolean checkWinning() {
+        for (Cards c : this.Cards) {
+            if (!c.getCardMatchedInfo()) {
                 return false;
             }
         }
@@ -304,7 +312,7 @@ public class BoardScreenSingle extends JFrame {
             }
 
 
-    });
+        });
         gameTimeControl.start();
     }
 

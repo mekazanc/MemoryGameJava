@@ -1,17 +1,18 @@
 import javax.swing.JButton;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class Settings {
 
     // Define getters and setters to update game parameters.
-    private int colId;
-    private int rowId;
-    private int diffLevel;
-    private int timeInfo;
-    private String playerName;
+    private int colId = 4 ;
+    private int rowId = 3 ;
+    private int diffLevel = 1000;
+    private int timeInfo = 60;
+    private String playerName ;
     private boolean singlePlayer;
-    private List<String> multiplePlayerName;
+    private List<String> multiplePlayerName = Arrays.asList("Player1");
 
 
     public int getDiffLevel() {

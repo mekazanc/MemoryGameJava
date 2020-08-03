@@ -7,7 +7,7 @@ import javax.swing.*;
         import java.util.List;
         import java.util.Set;
 
-public class BoardScreenMultiple extends JFrame {
+public class PlayGameWithMultiple extends JFrame {
 
     private int col;
     private int row;
@@ -30,7 +30,7 @@ public class BoardScreenMultiple extends JFrame {
 
 
 
-    public BoardScreenMultiple(Settings gameParams) {
+    public PlayGameWithMultiple(Settings gameParams) {
 
         this.col = gameParams.getcolId();
         this.row = gameParams.getrowId();

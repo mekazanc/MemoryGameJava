@@ -405,7 +405,7 @@ public class InitialScreen {
 
         // determine size of the game : Single or Multiplayer.
         if (gameParams.getPlayersName().size() == 1) {
-            BoardScreenSingle startGame = new BoardScreenSingle(gameParams);
+            PlayGameWithSingle startGame = new PlayGameWithSingle(gameParams);
             // Someone can exit board.
             startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             // Set background color.
@@ -417,7 +417,7 @@ public class InitialScreen {
 
         } else {
 
-            BoardScreenMultiple startGame = new BoardScreenMultiple(gameParams);
+            PlayGameWithMultiple startGame = new PlayGameWithMultiple(gameParams);
             // Someone can exit board.
             startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             // Set background color.
@@ -427,9 +427,6 @@ public class InitialScreen {
             startGame.pack();
             startGame.setVisible(true);
         }
-
-
-
 
 
     }
@@ -594,13 +591,13 @@ public class InitialScreen {
 
         switch (aButton.getText()) {
             case "Easy":
-                gameParams.setDiffLevel(2000);
+                gameParams.setDiffLevel(500);
                 break;
             case "Medium":
                 gameParams.setDiffLevel(1000);
                 break;
             case "Difficult":
-                gameParams.setDiffLevel(500);
+                gameParams.setDiffLevel(2000);
                 break;
         }
 
