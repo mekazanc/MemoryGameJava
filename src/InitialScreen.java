@@ -23,7 +23,6 @@ public class InitialScreen {
     public Settings gameParams = new Settings();
 
 
-
     public static void main(String[] args) {
 
         InitialScreen game = new InitialScreen();
@@ -404,16 +403,33 @@ public class InitialScreen {
         frame.setVisible(false);
         frame.dispose();
 
+        // determine size of the game : Single or Multiplayer.
+        if (gameParams.getPlayersName().size() == 1) {
+            BoardScreenSingle startGame = new BoardScreenSingle(gameParams);
+            // Someone can exit board.
+            startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            // Set background color.
+            startGame.setBackground(Color.gray);
+            // Other Board remaining initializations.
+            startGame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
+            startGame.pack();
+            startGame.setVisible(true);
 
-        BoardScreen startGame =  new BoardScreen(gameParams);
-        // Someone can exit board.
-        startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Set background color.
-        startGame.setBackground(Color.gray);
-        // Other Board remaining initializations.
-        startGame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
-        startGame.pack();
-        startGame.setVisible(true);
+        } else {
+
+            BoardScreenMultiple startGame = new BoardScreenMultiple(gameParams);
+            // Someone can exit board.
+            startGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            // Set background color.
+            startGame.setBackground(Color.gray);
+            // Other Board remaining initializations.
+            startGame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
+            startGame.pack();
+            startGame.setVisible(true);
+        }
+
+
+
 
 
     }
@@ -567,7 +583,6 @@ public class InitialScreen {
         gameParams.setTimeInfo(intTimeText);
 
 
-
     }
 
 
@@ -580,7 +595,6 @@ public class InitialScreen {
         switch (aButton.getText()) {
             case "Easy":
                 gameParams.setDiffLevel(2000);
-
                 break;
             case "Medium":
                 gameParams.setDiffLevel(1000);

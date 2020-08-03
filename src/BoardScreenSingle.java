@@ -5,83 +5,79 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-public class BoardScreen extends JFrame {
-
+public class BoardScreenSingle extends JFrame {
     private int col;
     private int row;
     private int diffLevel;
-    private int timeInfo;
-    private String playerName;
-    private Settings gameParams;
-    private boolean playerSingle;
     private List<String> playersName;
     private Cards choseMyCard;
     private Cards card1 = null ;
     private Cards card2 = null;
     private Cards infoCard;
     private int[] gameScores;
-    private int timeScore = 0 ;
-    private Timer timeControl;
+    private int attackCardID;
+    private int timeScore ;
+    private boolean timeScoreStatus;
+    private Timer cardTimeControl;
+    private Timer gameTimeControl;
     private List<Cards> Cards;
+    private boolean alreadyExecuted = false;
     private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
 
 
+    public BoardScreenSingle(Settings gameParams) {
 
-    public BoardScreen(Settings gameParams) {
-
+        // retrieve game information to initialize board and game settings.
         this.col = gameParams.getcolId();
         this.row = gameParams.getrowId();
         this.diffLevel = gameParams.getDiffLevel();
-        this.timeInfo = gameParams.getTimeInfo();
-        this.playerSingle = gameParams.getSinglePlayer();
+        this.timeScore = gameParams.getTimeInfo();
         this.playersName = gameParams.getPlayersName();
-
         this.gameScores = new int[gameParams.getPlayersName().size()];
+        this.timeScoreStatus = gameParams.getTimeInfo() != 0;
+        this.diffLevel = gameParams.getDiffLevel(); // 500:Diff - 1000:Medium - 2000:Easy
 
-
-        System.out.println("bb " + gameParams.getPlayersName().size());
 
         // initialize card Number and List of Card Objects.
-
         this.Cards = initCards(row, col, gameParams);
 
-        // Create a BigRootPane with borderlayout.
+        // Create a BigRootPane with border layout.
         // We will put cards and info button inside.
         Container big = getRootPane();
         big.setLayout(new BorderLayout());
         //big.setBackground(Color.white);
 
-        //set up the board itself
+        //Set up the board itself
         Container pane = getContentPane();
         pane.setLayout(new GridLayout(row, col));
         //pane.setBackground(Color.white);
 
         // Create another card object for info button.
+        // This will show score and time information.
         Cards infoButton = new Cards();
 
 
-        // Merge to structure into Rootpane.
+        // Merge to structure into Root Pane.
         big.add(pane, BorderLayout.CENTER);
         big.add(infoButton, BorderLayout.SOUTH);
 
 
+        // display game details (name, time) in the info button.
         this.infoCard = infoButton;
         infoCard.changeButtonParams( gameScores,  timeScore, playersName);
 
 
-
+        // add Card objects into the board. Set their back-side symbol.
         for (Cards comp : Cards) {
             pane.add(comp);
             comp.setIcon(new ImageIcon(DEFAULT_IMAGE));
         }
-
-
     }
 
-
-    public List<Cards> initCards(int row, int col, Settings gameParams) {
+    // This list initializes card list. Add action listeners to each card.
+    // and return all card as list of objects.
+    private List<Cards> initCards(int row, int col, Settings gameParams) {
 
         // create list of Card objects.
         List<Cards> listOfCards = new ArrayList<Cards>();
@@ -105,6 +101,9 @@ public class BoardScreen extends JFrame {
         // Mix card values randomly.
         Collections.shuffle(valuesOfCards);
 
+        // this is the ID of the attack card in difficult game.
+        attackCardID = valuesOfCards.get(0);
+
         // retrieve type of the game. (Singe/Double)
         int playerSize = gameParams.getPlayersName().size();
 
@@ -119,12 +118,7 @@ public class BoardScreen extends JFrame {
                     // assign mySelect as chosen card and then call flipCards method.
                     choseMyCard = mySelect;
                     // Flip cards will be called after any of cards is pressed.
-                    if (playerSize == 1) {
-                        flipCardsSingle();
-                    } else {
-                        flipCardsMulti();
-                    }
-
+                    flipCardsSingle();
                 }
             });
             // Add all buttons into one list to process them in a board.
@@ -136,80 +130,37 @@ public class BoardScreen extends JFrame {
     }
 
 
-
-
-
-
-
-
-
-
-
-    public void showBoard(JFrame boardFrame) {
-
-        JButton buttonPanel = new JButton();
-
-        // Create a BigRootPane with border layout.
-        // We will put cards and info button inside it.
-        Container big = getRootPane();
-        big.setLayout(new BorderLayout());
-        big.setBackground(Color.white);
-
-        // Define title.
-        boardFrame.setTitle("Game : Memory Matching");
-        //boardFrame.add(big);
-
-        buttonPanel.setText("hellooo");
-        boardFrame.add(buttonPanel);
-
-        // Other Board remaining initializations.
-        boardFrame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
-        boardFrame.setVisible(true);
-
-    }
-
-
-    public void initGameSingle(Settings gameParams) {
-
-
-        //Board cardBoard = new Board();
-        //cardBoard.initBoard(gameParams);
-
-
-    }
-
-    public void initGameMultiple() {
-
-    }
-
-    public void timeCounter(Timer timeControl) {
+    // this is a method to flip cards back after both are opened.
+    private void cardTimeCounter() {
 
         //set up the timer
-        timeControl = new Timer(750, new ActionListener(){
+        cardTimeControl = new Timer(750, new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 controlCards();
             }
         });
 
-        timeControl.setRepeats(false);
-        timeControl.start();
+        cardTimeControl.setRepeats(false);
+        cardTimeControl.start();
 
     }
-
-
-    public void flipCardsMulti() {
-
-
-    }
-
 
 
     // This method fills card1 and card2 objects according to actions in the board.
     // Each button has action listeners so that choseMyCard object is filled.
-    public void flipCardsSingle() {
+    private void flipCardsSingle() {
 
         // This condition helps us to understand first card is selected.
         if (card1 == null && card2 == null) {
+
+            // start timer of the game once.
+            if(!alreadyExecuted) {
+                trackTime();
+                alreadyExecuted = true;
+            }
+
+
+
             System.out.println("Card 1 is selected");
             // After card is chosen, image need to be showed.
             card1 = choseMyCard;
@@ -231,14 +182,16 @@ public class BoardScreen extends JFrame {
             card2.setImageVisible(no, "socialmedia");
 
             // start time to come back.
-            timeCounter(timeControl);
+            cardTimeCounter();
 
         }
 
     }
 
+    // This method checks both selected cards. They can stay opened or they come back (closed).
+    private void controlCards() {
 
-    public void controlCards() {
+            boolean cardMatching ;
 
             if (card1.getCardNo() == card2.getCardNo()){//match condition
                 card1.setEnabled(false); //disables the button
@@ -246,7 +199,10 @@ public class BoardScreen extends JFrame {
                 card1.setCardMatchedInfo(true); //flags the button as having been matched
                 card2.setCardMatchedInfo(true);
                 //gameScore++;
+                gameScores[0] = gameScores[0] + 1;
 
+                // start game effect : positive effect
+                startGameEffect(true);
 
                 if (this.checkWinning()){
                     JOptionPane.showMessageDialog(this, "You win!");
@@ -255,6 +211,10 @@ public class BoardScreen extends JFrame {
             }
 
             else{
+
+                // start game effect : negative effect
+                startGameEffect(false);
+
                 // Then we need to change picture of our unselected cards.
                 card1.setIcon(new ImageIcon(DEFAULT_IMAGE));
                 card2.setIcon(new ImageIcon(DEFAULT_IMAGE));
@@ -264,16 +224,98 @@ public class BoardScreen extends JFrame {
             card2 = null;
         }
 
-    public boolean checkWinning(){
+    // This method affects game according to difficulty level.
+    // Easy : Time Counter increases 1 second.
+    // Medium : No effect.
+    // Difficult : Time Counter decreases 1 second and an attack Card inserted.
+    // If an Attack Card is selected, all opened cards flipped back
+    private void startGameEffect(boolean cardMatching) {
+
+
+        if (cardMatching) {
+            // increase time information by one.
+            if (diffLevel == 500) {
+                timeScore++;
+            }
+
+        } else {
+            // decrease time information by one.
+            if (diffLevel == 2000) {
+                timeScore--;
+
+            }
+
+        }
+    }
+
+
+
+    // This method checks winning state.
+    private boolean checkWinning(){
         for(Cards c: this.Cards){
             if (!c.getCardMatchedInfo()){
                 return false;
             }
         }
+
+        infoCard.changeButtonParams(gameScores, timeScore, playersName);
+        stopTime();
         return true;
     }
 
+    // This method counts time and change infoButton status (score-time info.)
+    private void trackTime() {
+
+        // Define timer with 1 second period.
+        gameTimeControl = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                //System.out.println("test timer has started");
+
+                // Control timeCounter is true or false. If it is true, time will be decreased.
+                // Otherwise, only infobutton will be updated.
+
+                if (timeScoreStatus) {
+                    timeScore--;
+                    //infoCard.changeParameters(score, remTime, playerNameOne);
+                    infoCard.changeButtonParams(gameScores, timeScore, playersName);
+                    // check time information.
+                    if (timeScore <= 0) {
+                        stopTime();
+                        int response = JOptionPane.showConfirmDialog(null, "Time is UP. ",
+                                "Do you want to play this game again ? ", JOptionPane.YES_NO_CANCEL_OPTION);
+                        if (response == 0) {
+                            // start new game
+                            //timeControl.stop();
+                            dispose();
+                            //Initial.initialize();
+                        } else if (response == 1) {
+                            // exit from the game.
+                            System.exit(0);
+                        }
+                    }
+
+                } else {
+
+                    //infoCard.changeParameters(score, remTime, playerNameOne);
+                    infoCard.changeButtonParams(gameScores, timeScore, playersName);
+
+                }
+
+            }
 
 
+    });
+        gameTimeControl.start();
+    }
+
+    // stop timer.
+    private void stopTime() {
+
+        gameTimeControl.stop();
+    }
 
 }
+
+
+
+
