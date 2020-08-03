@@ -254,6 +254,9 @@ public class PlayGameWithSingle extends JFrame {
                         comp.setCardMatchedInfo(false);
                     }
 
+                    // make game score zero.
+                    gameScores[0] = 0 ;
+
 
                 }
 

@@ -36,7 +36,7 @@ public class ScoreUpdate {
         // check and update score
         boolean result = scoreControl(finalScore, playerName);
         if (result) {
-            System.out.println("Score UPDATED..!! CONGRATULATIONS...");
+            System.out.println("Score will UPDATED..!! CONGRATULATIONS...");
         }
 
 
@@ -57,9 +57,10 @@ public class ScoreUpdate {
         int usedTime = selectedTime - remTime;
         System.out.println(usedTime);
 
-        if (usedTime == 0) {
+        if (selectedTime == 0) {
 
             finalScore = 0;
+
         } else {
 
             finalScore = size * ((double) size / usedTime);

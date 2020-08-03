@@ -13,7 +13,7 @@ public class Settings {
     private int timeInfo = 60;
     private String playerName ;
     private String cardTheme = "socialmedia";
-    private Color backgroundColor ;
+    private Color backgroundColor  = Color.white;
     private boolean singlePlayer;
     private List<String> multiplePlayerName = Arrays.asList("Player1");
 
