@@ -18,6 +18,7 @@ public class PlayGameWithSingle extends JFrame {
     private int[] gameScores;
     private int attackCardID;
     private int timeScore;
+    private int timeScoreSelected;
     private boolean timeScoreStatus;
     private Timer cardTimeControl;
     private Timer gameTimeControl;
@@ -37,6 +38,7 @@ public class PlayGameWithSingle extends JFrame {
         this.gameScores = new int[gameParams.getPlayersName().size()];
         this.timeScoreStatus = gameParams.getTimeInfo() != 0;
         this.diffLevel = gameParams.getDiffLevel(); // 500:Diff - 1000:Medium - 2000:Easy
+        this.timeScoreSelected = gameParams.getTimeInfo();
 
 
         // initialize card Number and List of Card Objects.
@@ -265,9 +267,15 @@ public class PlayGameWithSingle extends JFrame {
                 return false;
             }
         }
-
+        // update info button.
         infoCard.changeButtonParams(gameScores, timeScore, playersName);
+        // stop timer
         stopTime();
+
+        // update scoreboard
+        ScoreUpdate gameScoreUpdate = new ScoreUpdate(timeScore, row, col, timeScoreSelected, playersName.get(0));
+        gameScoreUpdate.checkAndUpdate();
+
         return true;
     }
 
