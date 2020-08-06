@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class PlayGameWithMultiple extends JFrame {
+
 
     private List<String> playersName;
     private Cards choseMyCard;
@@ -18,11 +18,12 @@ public class PlayGameWithMultiple extends JFrame {
     private int timeScore;
     private boolean playFirstPlayer;
     private String cardTheme;
-    private boolean timeScoreStatus;
     private Timer gameTimeControl;
     private List<Cards> Cards;
-    private boolean alreadyExecuted = false;
-    private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
+    private Color backColor;
+    //private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
+    private String DEFAULT_IMAGE = "./photos/logo3.png";
+
 
 
     public PlayGameWithMultiple(Settings gameParams) {
@@ -34,6 +35,8 @@ public class PlayGameWithMultiple extends JFrame {
         this.gameScores = new int[gameParams.getPlayersName().size()];
         this.cardTheme = gameParams.getCardTheme();
         this.playFirstPlayer = true;
+        this.cardTheme = gameParams.getCardTheme();
+        this.backColor = gameParams.getBackColor();
 
 
         // initialize card Number and List of Card Objects.
@@ -48,7 +51,7 @@ public class PlayGameWithMultiple extends JFrame {
         //set up the board itself
         Container pane = getContentPane();
         pane.setLayout(new GridLayout(row, col));
-        //pane.setBackground(Color.white);
+        pane.setBackground(backColor);
 
         // Create another card object for info button.
         Cards infoButton = new Cards();
@@ -149,7 +152,7 @@ public class PlayGameWithMultiple extends JFrame {
             card1.setImageVisible(no, cardTheme);
 
             // this will update the score board in each second.
-            updateScoreBoard(true);
+            updateScoreBoard();
 
         }
 
@@ -229,16 +232,16 @@ public class PlayGameWithMultiple extends JFrame {
 
         if (gameScores[0] > gameScores[1]) {
 
-            return "Congratulations." + playersName.get(0) + " win the game ";
+            return "Congratulations. " + playersName.get(0) + " win the game ";
 
         } else if (gameScores[0] < gameScores[1]) {
 
-            return "Congratulations." + playersName.get(1) + " win the game ";
+            return "Congratulations. " + playersName.get(1) + " win the game ";
 
 
         } else {
 
-            return "Excellent Challenge. It's tie. Let's play again :)";
+            return "Excellent Challenge. It's tie. Let's play it again :)";
 
         }
     }
@@ -264,25 +267,20 @@ public class PlayGameWithMultiple extends JFrame {
 
 
     // this runs each second to update score button below.
-    private void updateScoreBoard(boolean status) {
+    private void updateScoreBoard() {
 
-        if (status) {
-            // Define timer with 1 second period.
-            gameTimeControl = new Timer(1000, new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    //System.out.println("test timer has started");
+        // Define timer with 1 second period.
+        gameTimeControl = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                //System.out.println("test timer has started");
 
-                    //infoCard.changeParameters(score, remTime, playerNameOne);
-                    infoCard.changeButtonParams(gameScores, timeScore, playersName);
+                //infoCard.changeParameters(score, remTime, playerNameOne);
+                infoCard.changeButtonParams(gameScores, timeScore, playersName);
 
-                }
-            });
-            gameTimeControl.start();
-        } else {
-            System.out.println("No Update..!!");
-        }
+            }
+        });
+        gameTimeControl.start();
     }
-
 
 
 }

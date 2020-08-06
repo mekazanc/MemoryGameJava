@@ -7,15 +7,15 @@ import java.util.List;
 public class Settings {
 
     // Define getters and setters to update game parameters.
-    private int colId = 4 ;
-    private int rowId = 3 ;
+    private int colId = 4;
+    private int rowId = 3;
     private int diffLevel = 1000;
     private int timeInfo = 60;
-    private String playerName ;
+    private String playerName;
     private String cardTheme = "socialmedia";
-    private Color backgroundColor  = Color.white;
+    private Color backgroundColor = Color.white;
     private boolean singlePlayer;
-    private List<String> multiplePlayerName = Arrays.asList("Player1");
+    private List<String> multiplePlayerName = Arrays.asList("Player 1 ");
 
 
     public int getDiffLevel() {
@@ -56,7 +56,6 @@ public class Settings {
         System.out.println("Setting is ok " + color);
 
     }
-
 
     public void setrowId(int id) {
         this.rowId = id;

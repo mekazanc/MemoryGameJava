@@ -9,7 +9,6 @@ import java.util.List;
 public class PlayGameWithSingle extends JFrame {
 
     // initalize class variables.
-
     private int col;
     private int row;
     private int diffLevel;
