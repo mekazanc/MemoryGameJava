@@ -209,9 +209,23 @@ public class PlayGameWithSingle extends JFrame {
             startGameEffect(true);
 
             if (this.checkWinning()) {
-                JOptionPane.showMessageDialog(this, "You win!");
-                System.exit(0);
+                //JOptionPane.showMessageDialog(this, "You win!");
+                //System.exit(0);
+
+                int response = JOptionPane.showConfirmDialog(this, "Congratulations. You are the Champion. ",
+                        "Do you want to play this game again ? ", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if (response == 0) {
+                    dispose();
+                    // start new game
+                    InitialScreen newGame = new InitialScreen();
+                    newGame.initLaunchScreen();
+                } else if (response == 1) {
+                    // exit from the game.
+                    System.exit(0);
+                }
             }
+
         } else {
 
             // start game effect : negative effect
@@ -257,7 +271,6 @@ public class PlayGameWithSingle extends JFrame {
                     // make game score zero.
                     gameScores[0] = 0 ;
 
-
                 }
 
             }
@@ -266,6 +279,21 @@ public class PlayGameWithSingle extends JFrame {
     }
 
 
+
+    private void startShuffleEffect(Settings gameParams) {
+
+        Cards = initCards(row, col, gameParams);
+
+        for (Cards comp : Cards) {
+            comp.setIcon(new ImageIcon(DEFAULT_IMAGE));
+            comp.setEnabled(true);
+            comp.setCardMatchedInfo(false);
+        }
+
+        // make game score zero.
+        gameScores[0] = 0 ;
+
+    }
     // This method checks winning state.
     private boolean checkWinning() {
         for (Cards c : this.Cards) {
@@ -277,6 +305,7 @@ public class PlayGameWithSingle extends JFrame {
         infoCard.changeButtonParams(gameScores, timeScore, playersName);
         // stop timer
         stopTime();
+
 
         // update scoreboard
         ScoreUpdate gameScoreUpdate = new ScoreUpdate(timeScore, row, col, timeScoreSelected, playersName.get(0));
@@ -307,9 +336,9 @@ public class PlayGameWithSingle extends JFrame {
                                 "Do you want to play this game again ? ", JOptionPane.YES_NO_CANCEL_OPTION);
                         if (response == 0) {
                             // start new game
-                            //timeControl.stop();
                             dispose();
-                            //Initial.initialize();
+                            InitialScreen newGame = new InitialScreen();
+                            newGame.initLaunchScreen();
                         } else if (response == 1) {
                             // exit from the game.
                             System.exit(0);
@@ -322,7 +351,6 @@ public class PlayGameWithSingle extends JFrame {
                     infoCard.changeButtonParams(gameScores, timeScore, playersName);
 
                 }
-
             }
 
 

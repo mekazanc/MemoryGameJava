@@ -22,8 +22,8 @@ public class MainGame {
         //System.out.println(theController);
         //System.out.println(theController.toString());*/
 
-        theController.controllerStartGame();
-
+        theController.controllerStartInitialScreen();
+        //theController.controllerStartGame();
 
     }
 }

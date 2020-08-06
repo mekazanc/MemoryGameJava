@@ -25,8 +25,8 @@ public class InitialScreen {
 
     public static void main(String[] args) {
 
-        InitialScreen game = new InitialScreen();
-        game.initLaunchScreen();
+        //InitialScreen game = new InitialScreen();
+        //game.initLaunchScreen();
 
     }
 
@@ -402,8 +402,10 @@ public class InitialScreen {
 
         frame.setVisible(false);
         frame.dispose();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // determine size of the game : Single or Multiplayer.
+
+        // determine size of the game : Single or Multi Player.
         if (gameParams.getPlayersName().size() == 1) {
             PlayGameWithSingle startGame = new PlayGameWithSingle(gameParams);
             // Someone can exit board.

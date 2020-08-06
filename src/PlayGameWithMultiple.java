@@ -1,45 +1,39 @@
 import javax.swing.*;
-        import java.awt.*;
-        import java.awt.event.ActionEvent;
-        import java.awt.event.ActionListener;
-        import java.util.ArrayList;
-        import java.util.Collections;
-        import java.util.List;
-        import java.util.Set;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class PlayGameWithMultiple extends JFrame {
 
-    private int col;
-    private int row;
-    private int diffLevel;
-    private String playerName;
-    private Settings gameParams;
     private List<String> playersName;
     private Cards choseMyCard;
-    private Cards card1 = null ;
+    private Cards card1 = null;
     private Cards card2 = null;
     private Cards infoCard;
     private int[] gameScores;
-    private int timeScore ;
+    private int timeScore;
+    private boolean playFirstPlayer;
+    private String cardTheme;
     private boolean timeScoreStatus;
-    private Timer cardTimeControl;
     private Timer gameTimeControl;
     private List<Cards> Cards;
     private boolean alreadyExecuted = false;
     private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
 
 
-
     public PlayGameWithMultiple(Settings gameParams) {
 
-        this.col = gameParams.getcolId();
-        this.row = gameParams.getrowId();
-        this.diffLevel = gameParams.getDiffLevel();
+        int col = gameParams.getcolId();
+        int row = gameParams.getrowId();
         this.timeScore = gameParams.getTimeInfo();
         this.playersName = gameParams.getPlayersName();
         this.gameScores = new int[gameParams.getPlayersName().size()];
-        this.timeScoreStatus = gameParams.getTimeInfo() != 0;
-
+        this.cardTheme = gameParams.getCardTheme();
+        this.playFirstPlayer = true;
 
 
         // initialize card Number and List of Card Objects.
@@ -66,8 +60,7 @@ public class PlayGameWithMultiple extends JFrame {
 
 
         this.infoCard = infoButton;
-        infoCard.changeButtonParams( gameScores,  timeScore, playersName);
-
+        infoCard.changeButtonParams(gameScores, timeScore, playersName);
 
 
         for (Cards comp : Cards) {
@@ -103,9 +96,6 @@ public class PlayGameWithMultiple extends JFrame {
         // Mix card values randomly.
         Collections.shuffle(valuesOfCards);
 
-        // retrieve type of the game. (Singe/Double)
-        int playerSize = gameParams.getPlayersName().size();
-
 
         for (Integer valuesOfCard : valuesOfCards) {
             // Create Card object for each image.
@@ -117,12 +107,7 @@ public class PlayGameWithMultiple extends JFrame {
                     // assign mySelect as chosen card and then call flipCards method.
                     choseMyCard = mySelect;
                     // Flip cards will be called after any of cards is pressed.
-                    if (playerSize == 1) {
-                        flipCardsSingle();
-                    } else {
-                        flipCardsMulti();
-                    }
-
+                    flipCardsMulti();
                 }
             });
             // Add all buttons into one list to process them in a board.
@@ -134,72 +119,26 @@ public class PlayGameWithMultiple extends JFrame {
     }
 
 
-
-
-    public void showBoard(JFrame boardFrame) {
-
-        JButton buttonPanel = new JButton();
-
-        // Create a BigRootPane with border layout.
-        // We will put cards and info button inside it.
-        Container big = getRootPane();
-        big.setLayout(new BorderLayout());
-        big.setBackground(Color.white);
-
-        // Define title.
-        boardFrame.setTitle("Game : Memory Matching");
-        //boardFrame.add(big);
-
-        buttonPanel.setText("hellooo");
-        boardFrame.add(buttonPanel);
-
-        // Other Board remaining initializations.
-        boardFrame.setPreferredSize(new Dimension(600, 600)); //need to use this instead of setSize
-        boardFrame.setVisible(true);
-
-    }
-
-
-    public void initGameMultiple() {
-
-    }
-
-    public void timeCounter(Timer timeControl) {
+    // this is a method to flip cards back after both are opened.
+    private void cardTimeCounter() {
 
         //set up the timer
-        timeControl = new Timer(750, new ActionListener(){
-            public void actionPerformed(ActionEvent ae){
+        Timer cardTimeControl = new Timer(750, new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
                 controlCards();
             }
         });
 
-        timeControl.setRepeats(false);
-        timeControl.start();
-
+        cardTimeControl.setRepeats(false);
+        cardTimeControl.start();
     }
 
 
-    public void flipCardsMulti() {
+    private void flipCardsMulti() {
 
-
-    }
-
-
-
-    // This method fills card1 and card2 objects according to actions in the board.
-    // Each button has action listeners so that choseMyCard object is filled.
-    public void flipCardsSingle() {
 
         // This condition helps us to understand first card is selected.
         if (card1 == null && card2 == null) {
-
-            // start timer of the game once.
-            if(!alreadyExecuted) {
-                trackTime();
-                alreadyExecuted = true;
-            }
-
-
 
             System.out.println("Card 1 is selected");
             // After card is chosen, image need to be showed.
@@ -207,7 +146,10 @@ public class PlayGameWithMultiple extends JFrame {
             // In this step, image was taken according to card no.
             String no = String.valueOf(card1.getCardNo());
             // Then, card-button displays image.
-            card1.setImageVisible(no, "socialmedia");
+            card1.setImageVisible(no, cardTheme);
+
+            // this will update the score board in each second.
+            updateScoreBoard(true);
 
         }
 
@@ -219,33 +161,59 @@ public class PlayGameWithMultiple extends JFrame {
             // Then, get card no of it.
             String no = String.valueOf(card2.getCardNo());
             // Finally, card object shows its image.
-            card2.setImageVisible(no, "socialmedia");
+            card2.setImageVisible(no, cardTheme);
 
             // start time to come back.
-            timeCounter(gameTimeControl);
+            cardTimeCounter();
 
         }
 
     }
 
 
-    public void controlCards() {
+    private void controlCards() {
 
-        if (card1.getCardNo() == card2.getCardNo()){//match condition
+
+        if (card1.getCardNo() == card2.getCardNo()) {//match condition
             card1.setEnabled(false); //disables the button
             card2.setEnabled(false);
             card1.setCardMatchedInfo(true); //flags the button as having been matched
             card2.setCardMatchedInfo(true);
             //gameScore++;
-            gameScores[0] = gameScores[0] + 1;
 
-            if (this.checkWinning()){
-                JOptionPane.showMessageDialog(this, "You win!");
-                System.exit(0);
+            // increase score according to current player of the game.
+            if (playFirstPlayer) {
+                gameScores[0] = gameScores[0] + 1;
+            } else {
+                gameScores[1] = gameScores[1] + 1;
             }
-        }
 
-        else{
+            if (this.checkWinning()) {
+                //JOptionPane.showMessageDialog(this, "You win!");
+                //System.exit(0);
+
+                // check winner
+                String winMessage = getWinnerMessage(gameScores, playersName);
+
+                int response = JOptionPane.showConfirmDialog(this, winMessage,
+                        "Do you want to play this game again ? ", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if (response == 0) {
+                    dispose();
+                    // start new game
+                    InitialScreen newGame = new InitialScreen();
+                    newGame.initLaunchScreen();
+                } else if (response == 1) {
+                    // exit from the game.
+                    System.exit(0);
+                }
+            }
+
+        } else {
+
+
+            playFirstPlayer = !playFirstPlayer;
+
             // Then we need to change picture of our unselected cards.
             card1.setIcon(new ImageIcon(DEFAULT_IMAGE));
             card2.setIcon(new ImageIcon(DEFAULT_IMAGE));
@@ -253,11 +221,32 @@ public class PlayGameWithMultiple extends JFrame {
         }
         card1 = null; //reset c1 and c2
         card2 = null;
+
     }
 
-    public boolean checkWinning(){
-        for(Cards c: this.Cards){
-            if (!c.getCardMatchedInfo()){
+    // according to winner receive winning message.
+    private String getWinnerMessage(int[] gameScores, List<String> playersName) {
+
+        if (gameScores[0] > gameScores[1]) {
+
+            return "Congratulations." + playersName.get(0) + " win the game ";
+
+        } else if (gameScores[0] < gameScores[1]) {
+
+            return "Congratulations." + playersName.get(1) + " win the game ";
+
+
+        } else {
+
+            return "Excellent Challenge. It's tie. Let's play again :)";
+
+        }
+    }
+
+
+    private boolean checkWinning() {
+        for (Cards c : this.Cards) {
+            if (!c.getCardMatchedInfo()) {
                 return false;
             }
         }
@@ -266,35 +255,35 @@ public class PlayGameWithMultiple extends JFrame {
         return true;
     }
 
-    // This method counts time and change infoButton status (score-time info.)
-    public void trackTime() {
 
-        // Define timer with 1 second period.
-        gameTimeControl = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                //System.out.println("test timer has started");
+    // stop timer.
+    private void stopTime() {
 
-                // Control timeCounter is true or false. If it is true, time will be decreased.
-                // Otherwise, only infobutton will be updated.
+        gameTimeControl.stop();
+    }
 
-                if (timeScoreStatus) {
-                    timeScore--;
+
+    // this runs each second to update score button below.
+    private void updateScoreBoard(boolean status) {
+
+        if (status) {
+            // Define timer with 1 second period.
+            gameTimeControl = new Timer(1000, new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    //System.out.println("test timer has started");
+
                     //infoCard.changeParameters(score, remTime, playerNameOne);
                     infoCard.changeButtonParams(gameScores, timeScore, playersName);
 
                 }
-            }
-
-
-        });
-        gameTimeControl.start();
+            });
+            gameTimeControl.start();
+        } else {
+            System.out.println("No Update..!!");
+        }
     }
 
-    // stop timer.
-    public void stopTime() {
 
-        gameTimeControl.stop();
-    }
 
 }
 
