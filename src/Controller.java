@@ -14,6 +14,15 @@ public class Controller {
 
     }
 
+    public Controller(InitialScreen theView) {
+
+        this.theView = theView;
+
+    }
+
+
+
+
 
     public void controllerStartInitialScreen() {
 

@@ -13,14 +13,14 @@ public class MainGame {
 
         //InitialScreen theView = new InitialScreen();
 
-        theModel = theView.gameParams;
+        // theModel = theView.gameParams;
 
         //System.out.println(theModel.getSingleName());
 
 
-        Controller theController = new Controller(theView, theModel);
-        //System.out.println(theController);
-        //System.out.println(theController.toString());*/
+        //Controller theController = new Controller(theView, theModel);
+        Controller theController = new Controller(theView);
+
 
         theController.controllerStartInitialScreen();
         //theController.controllerStartGame();
