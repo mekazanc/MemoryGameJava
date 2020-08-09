@@ -28,7 +28,7 @@ public class PlayGameWithSingle extends JFrame {
     private List<Cards> Cards;
     private String cardTheme;
     private boolean alreadyExecuted = false;
-    private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
+    private String DEFAULT_IMAGE = "photos/logo3.png";
 
 
     public PlayGameWithSingle(Settings gameParams) {
