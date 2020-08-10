@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,10 @@ public class PlayGameWithMultiple extends JFrame {
     private List<Cards> Cards;
     private Color backColor;
     //private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
-    private String DEFAULT_IMAGE = "./photos/logo3.png";
+    //private String DEFAULT_IMAGE = "./photos/logo3.png";
+    ClassLoader cl = getClass().getClassLoader();
+    File file_default = new File(cl.getResource("photos/logo3.png").getFile());
+    String DEFAULT_IMAGE = file_default.toString();
 
 
 
