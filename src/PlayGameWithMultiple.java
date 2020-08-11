@@ -24,11 +24,8 @@ public class PlayGameWithMultiple extends JFrame {
     private Color backColor;
     //private String DEFAULT_IMAGE = "/Users/mekazanc/Desktop/AugustJava/photos/logo3.png";
     //private String DEFAULT_IMAGE = "./photos/logo3.png";
-    ClassLoader cl = getClass().getClassLoader();
-    File file_default = new File(cl.getResource("photos/logo3.png").getFile());
-    String DEFAULT_IMAGE = file_default.toString();
-
-
+    private File file_default = new File(PlayGameWithSingle.class.getResource("/logo3.png").getFile());
+    private String DEFAULT_IMAGE = file_default.getPath();
 
     public PlayGameWithMultiple(Settings gameParams) {
 
