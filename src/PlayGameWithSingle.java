@@ -29,11 +29,9 @@ public class PlayGameWithSingle extends JFrame {
     private List<Cards> Cards;
     private String cardTheme;
     private boolean alreadyExecuted = false;
-    //private String DEFAULT_IMAGE = "photos/logo3.png";
-    ClassLoader cl = getClass().getClassLoader();
-    File file_default = new File(cl.getResource("photos/logo3.png").getFile());
-    String DEFAULT_IMAGE = file_default.toString();
-
+    
+    private File file_default = new File(PlayGameWithSingle.class.getResource("/logo3.png").getFile());
+    private String DEFAULT_IMAGE = file_default.getPath();
 
     public PlayGameWithSingle(Settings gameParams) {
 
@@ -78,7 +76,6 @@ public class PlayGameWithSingle extends JFrame {
         // display game details (name, time) in the info button.
         this.infoCard = infoButton;
         infoCard.changeButtonParams(gameScores, timeScore, playersName);
-
 
         // add Card objects into the board. Set their back-side symbol.
         for (Cards comp : Cards) {

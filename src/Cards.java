@@ -36,14 +36,10 @@ public class Cards extends JButton {
     public void setImageVisible(String no, String themeFolder ) {
 
         //System.out.println("./photos/" + themeFolder + "/" + no + ".png");
-
-
-        String header = "photos/" + themeFolder + "/";
-
-        ClassLoader cl = getClass().getClassLoader();
-        File file = new File(Objects.requireNonNull(cl.getResource(header + no + ".png")).getFile());
-        String FILE_NAME = file.toString();
-        setIcon(new ImageIcon(FILE_NAME));
+        String filename = themeFolder + "/" + no + ".png";
+        
+        File file = new File(getClass().getClassLoader().getResource(filename).getFile());
+        setIcon(new ImageIcon(file.getPath()));
 
     }
 

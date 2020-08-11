@@ -1,2 +1,9 @@
 # Project exclude paths
 /out/
+/target/
+*.iml
+.idea/
+.classpath
+.settings
+.project
+bin/
